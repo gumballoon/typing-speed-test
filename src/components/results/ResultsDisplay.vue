@@ -31,34 +31,36 @@ const isBestResult = computed(() => {
 </script>
 
 <template>
-  <div class="w-full relative">
+  <div class="w-full h-full relative">
     <div class="flex flex-col items-center text-center">
       <img :src="icon" alt="icon-alt" class="mt-8" :class="{ completed: !isBestResult }" />
       <h2 class="text-[1.75rem] font-semibold mt-8 mb-2">{{ title }}</h2>
       <p class="text-typing-neutral-400 text-lg mb-6">{{ description }}</p>
     </div>
-    <section
-      class="w-full py-3 px-6 flex flex-col gap-2 border-2 border-typing-neutral-800 rounded-xl mb-4"
-    >
-      <h3 class="text-typing-neutral-400 text-xl">WPM</h3>
-      <p class="font-bold text-2xl">{{ wpm }}</p>
-    </section>
-    <section
-      class="w-full py-3 px-6 flex flex-col gap-2 border-2 border-typing-neutral-800 rounded-xl mb-4"
-    >
-      <h3 class="text-typing-neutral-400 text-xl">Accuracy</h3>
-      <p class="font-bold text-2xl" :class="accuracyClass">{{ accuracyResult }}%</p>
-    </section>
-    <section
-      class="w-full py-3 px-6 flex flex-col gap-2 border-2 border-typing-neutral-800 rounded-xl mb-4"
-    >
-      <h3 class="text-typing-neutral-400 text-xl">Characters</h3>
-      <p class="font-bold text-2xl">
-        <span class="text-typing-green-500">{{ accuracy.success }}</span>
-        <span class="text-typing-neutral-500">/</span>
-        <span class="text-typing-red-500">{{ accuracy.fail }}</span>
-      </p>
-    </section>
+    <div class="flex flex-col max-w-150 mx-auto xl:flex-row xl:gap-4 xl:max-w-200 xl:mt-6">
+      <section
+        class="w-full py-3 px-6 flex flex-col gap-2 border-2 border-typing-neutral-800 rounded-xl mb-4"
+      >
+        <h3 class="text-typing-neutral-400 text-xl">WPM</h3>
+        <p class="font-bold text-2xl">{{ wpm }}</p>
+      </section>
+      <section
+        class="w-full py-3 px-6 flex flex-col gap-2 border-2 border-typing-neutral-800 rounded-xl mb-4"
+      >
+        <h3 class="text-typing-neutral-400 text-xl">Accuracy</h3>
+        <p class="font-bold text-2xl" :class="accuracyClass">{{ accuracyResult }}%</p>
+      </section>
+      <section
+        class="w-full py-3 px-6 flex flex-col gap-2 border-2 border-typing-neutral-800 rounded-xl mb-4"
+      >
+        <h3 class="text-typing-neutral-400 text-xl">Characters</h3>
+        <p class="font-bold text-2xl">
+          <span class="text-typing-green-500">{{ accuracy.success }}</span>
+          <span class="text-typing-neutral-500">/</span>
+          <span class="text-typing-red-500">{{ accuracy.fail }}</span>
+        </p>
+      </section>
+    </div>
     <restart-button :text="buttonText" mode="dark" class="mt-10"></restart-button>
 
     <!-- Background SVG's-->
@@ -72,7 +74,11 @@ const isBestResult = computed(() => {
       class="absolute top-20 left-0 scale-75 pattern"
       id="pattern-star-2"
     />
-    <PatternConfetti v-show="isBestResult" class="absolute w-full pattern" id="pattern-confetti" />
+    <PatternConfetti
+      v-show="isBestResult"
+      class="absolute w-full -bottom-100 pattern"
+      id="pattern-confetti"
+    />
   </div>
 </template>
 

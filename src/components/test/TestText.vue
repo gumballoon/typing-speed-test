@@ -41,10 +41,12 @@ const hasStarted = computed(() => {
 const hasWon = computed(() => {
   return inputText.value === passageText.value;
 });
+const hasTimerStarted = ref(false);
 
 // F U N C T I O N S //
 let timer;
 function startTimer() {
+  hasTimerStarted.value = true;
   store.dispatch("startGame");
   if (store.getters.mode === "Passage") {
     timer = setInterval(() => {
@@ -57,6 +59,7 @@ function startTimer() {
     }, 1000);
     setTimeout(() => {
       clearInterval(timer);
+      hasTimerStarted.value = false;
     }, 60000);
   }
 }
@@ -85,11 +88,11 @@ watch(wpm, (newVal, oldVal) => {
 watch(hasStarted, (newVal, oldVal) => {
   // to handle the start of the game
   if (newVal && newVal !== oldVal) {
-    startTimer();
     input.value.focus();
   } else if (!newVal && newVal !== oldVal) {
     // to handle the restart of the game
     clearInterval(timer);
+    hasTimerStarted.value = false;
     inputText.value = "";
     validatedLetters.value = [];
     wpmCounter.value = 0;
@@ -99,6 +102,7 @@ watch(hasStarted, (newVal, oldVal) => {
 watch(secondsLeft, (newVal, oldVal) => {
   if (!newVal && oldVal) {
     clearInterval(timer);
+    hasTimerStarted.value = false;
     store.dispatch("endGame");
   }
 });
@@ -127,6 +131,7 @@ watch(hasWon, (newVal, oldVal) => {
         v-model="inputText"
         @paste.prevent
         @keydown.enter.prevent
+        @input="!hasTimerStarted && startTimer()"
       ></textarea>
     </form>
     <restart-button v-show="hasStarted" text="Restart Test" mode="light"></restart-button>

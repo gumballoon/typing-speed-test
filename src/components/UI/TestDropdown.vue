@@ -36,6 +36,10 @@ function toggleDropdown() {
   if (!hasStarted.value) isDropdownVisible.value = !isDropdownVisible.value;
 }
 
+function isSelectedOption(option) {
+  return option === selectedOption.value;
+}
+
 watch(hasStarted, (newVal, oldVal) => {
   if (newVal && newVal !== oldVal && isDropdownVisible.value) isDropdownVisible.value = false;
 });
@@ -80,7 +84,8 @@ watch(hasStarted, (newVal, oldVal) => {
           type="radio"
           :name="name"
           :id="option"
-          :checked="option === selectedOption"
+          :checked="isSelectedOption(option)"
+          :disabled="hasStarted && !isSelectedOption(option)"
           @change="setSelectedOption(option)"
           class="appearance-none"
         />
@@ -114,7 +119,7 @@ input:checked + .radio-circle {
   outline-color: hsl(210, 100%, 65%);
 }
 input:checked + label.radio-box,
-label.radio-box:hover {
+input:not(:disabled) + label.radio-box:hover {
   border-color: hsl(210, 100%, 65%);
   color: hsl(210, 100%, 65%);
 }

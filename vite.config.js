@@ -8,6 +8,7 @@ import svgLoader from "vite-svg-loader";
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: "/typing-speed-test/",
   plugins: [vue(), vueDevTools(), tailwindcss(), svgLoader()],
   resolve: {
     alias: {

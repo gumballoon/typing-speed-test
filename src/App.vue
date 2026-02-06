@@ -18,7 +18,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <main class="p-4">
+  <main class="w-full min-h-screen p-4">
     <h1 hidden>Typing Speed Test</h1>
     <the-header class="mb-8"></the-header>
     <div v-if="!hasEnded">
